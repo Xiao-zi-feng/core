@@ -136,7 +136,8 @@ class Stream {
 		switch ($fileType) {
 			case Util::FILE_TYPE_FILE:
 				$this->relPath = Helper::stripUserFilesPath($this->rawPath);
-				$this->userId = \OC::$server->getUserSession()->getUser()->getUID();
+				$user = \OC::$server->getUserSession()->getUser();
+				$this->userId = $user ? $user->getUID() : Helper::getUserFromPath($this->rawPath);
 				break;
 			case Util::FILE_TYPE_VERSION:
 				$this->relPath = Helper::getPathFromVersion($this->rawPath);
